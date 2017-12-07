@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 })
 @EnableTransactionManagement
 class PersistenceContext {
-	   private static final String PROPS_FILE = "/etc/tomcat8/resources/masculexmysql.properties";
+	   private static final String PROPS_FILE = "/etc/tomcat8/resources/keengoatmysql.properties";
 		
 	   @Bean(name = "dataSource")
 	   public DriverManagerDataSource dataSource() {
