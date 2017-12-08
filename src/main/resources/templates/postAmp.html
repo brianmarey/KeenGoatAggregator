@@ -1,0 +1,239 @@
+<!doctype html>
+<html amp="" dir="ltr" lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<link rel="canonical" th:href="${noAmpUrl}"/>
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/>
+	<script async="" src="https://cdn.ampproject.org/v0.js"></script>
+	<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+	<title th:text="${post.title + ' | ' + webContext.title}"></title>
+	<style amp-custom="">
+		/* Merriweather fonts */
+		@font-face {
+			font-family:'Merriweather';
+			src:url('https://s1.wp.com/i/fonts/merriweather/merriweather-regular-webfont.woff2') format('woff2'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-regular-webfont.woff') format('woff'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-regular-webfont.ttf') format('truetype'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-regular-webfont.svg#merriweatherregular') format('svg');
+			font-weight:400;
+			font-style:normal;
+		}
+		
+		@font-face {
+			font-family:'Merriweather';
+			src:url('https://s1.wp.com/i/fonts/merriweather/merriweather-italic-webfont.woff2') format('woff2'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-italic-webfont.woff') format('woff'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-italic-webfont.ttf') format('truetype'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-italic-webfont.svg#merriweatheritalic') format('svg');
+			font-weight:400;
+			font-style:italic;
+		}
+		
+		@font-face {
+			font-family:'Merriweather';
+			src:url('https://s1.wp.com/i/fonts/merriweather/merriweather-bold-webfont.woff2') format('woff2'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-bold-webfont.woff') format('woff'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-bold-webfont.ttf') format('truetype'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-bold-webfont.svg#merriweatherbold') format('svg');
+			font-weight:700;
+			font-style:normal;
+		}
+		
+		@font-face {
+			font-family:'Merriweather';
+			src:url('https://s1.wp.com/i/fonts/merriweather/merriweather-bolditalic-webfont.woff2') format('woff2'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-bolditalic-webfont.woff') format('woff'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-bolditalic-webfont.ttf') format('truetype'),
+				url('https://s1.wp.com/i/fonts/merriweather/merriweather-bolditalic-webfont.svg#merriweatherbold_italic') format('svg');
+			font-weight:700;
+			font-style:italic;
+		}
+
+		body {
+			font-family: 'Merriweather', Serif;
+			font-size: 16px;
+			line-height: 1.8;
+			background: #fff;
+			color: #3d596d;
+			padding-bottom: 100px;
+		}
+		
+		/* Titlebar */
+		nav.amp-wp-title-bar {
+			background: #0a89c0;
+			padding: 0 16px;
+		}
+		
+		nav.amp-wp-title-bar div {
+			line-height: 54px;
+			color: #fff;
+		}
+		
+		nav.amp-wp-title-bar a {
+			color: #fff;
+			text-decoration: none;
+		}
+		
+		nav.amp-wp-title-bar .amp-wp-site-icon {
+			/** site icon is 32px **/
+			float: left;
+			margin: 11px 8px 0 0;
+			border-radius: 50%;
+		}
+		
+		.amp-wp-enforced-sizes {
+			max-width: 100%;
+		}
+		
+		#wrapper {
+			padding-left:30px;
+		}
+		
+		.clickButton {
+			background: #0a89c0;
+			color:#ffffff;
+			padding: 15px 15px 15px 15px;
+			width:100px;
+			text-align:center;
+		}
+		
+		.clickButton a {
+			text-decoration:none;
+			color:#ffffff;
+			font-weight:bold;
+		}
+		
+		.entryBlock {
+			margin-bottom:80px;
+		}
+		
+		.fixed-container {
+		   position: relative;
+		   width: 200px;
+		   height: 200px;
+		}
+		 
+		amp-img.contain img {
+		    object-fit: contain;
+		}
+	</style>
+</head>
+
+<body class="stretched">
+	<nav class="amp-wp-title-bar">
+		<div>
+			<a th:href="${webContext.homeUrl}">
+				<amp-img th:src="${webContext.homeUrl + '/images/favicon.png'}" width="32" height="32" class="amp-wp-site-icon"></amp-img>
+				<span th:text="${webContext.title}"></span>
+			</a>
+		</div>
+	</nav>
+	
+	<!-- Document Wrapper
+	============================================= -->
+	<div id="wrapper" class="clearfix">
+
+		<header id="header" class="transparent-header full-header" data-sticky-class="not-dark">
+		
+			<div id="header-wrap">
+		
+				<div class="container clearfix">
+		
+					<div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+						
+				</div>
+		
+			</div>
+		
+		</header><!-- #header end -->
+
+		<!-- Page Title
+		============================================= -->
+		<section id="page-title">
+
+			<div class="container clearfix">
+				<h1 th:text="${post.title}"></h1>
+			</div>
+
+		</section><!-- #page-title end -->
+
+		<!-- Content
+		============================================= -->
+		<section id="content">
+
+			<div class="content-wrap">
+
+				<div class="container clearfix">
+
+					<div class="single-post nobottommargin">
+
+						<!-- Single Post
+						============================================= -->
+						<div class="entry clearfix">
+
+							<!-- Entry Meta
+							============================================= -->
+							<div>
+								<span th:text="${post.dateDisplay}"></span>
+							</div>
+
+							<div>
+							<div th:each="product,iterStatus : ${post.products}" class="entryBlock">
+									<!-- Entry Title
+									============================================= -->
+									<div class="entry-title">
+										<h2><span th:text="${iterStatus.count + '. '}"></span> <span th:text="${product.title}"></span> <span th:text="${product.priceRange}"></span></h2>
+									</div><!-- .entry-title end -->
+		
+									<div class="fixed-container">
+										<a th:href="${product.link}" target="_blank"><amp-img class="contain" th:src="${product.imageUrl}" layout="fill"></amp-img></a>
+									</div>
+									<!-- Entry Content
+									============================================= -->
+									<div class="entry-content notopmargin">
+										<p th:utext="${product.description}"></p>
+										<div class="clickButton"><a th:href="${product.link}" class="button button-xlarge tright" target="_blank">Learn More</a></div>
+									</div>
+							</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</section><!-- #content end -->
+		</div>
+		<footer id="footer" class="dark">
+
+			<div class="container">
+		
+		
+			</div>
+		
+			<!-- Copyrights
+			============================================= -->
+			<div id="copyrights">
+		
+				<div class="container clearfix">
+		
+					<div class="col_half">
+						Copyright &copy; 2018<br/>
+						
+						<div class="copyright-links" th:if="${webContext != null}"><a th:href="${webContext.homeUrl}">Home</a> / <a th:href="${webContext.homeUrl + '/blog'}">Blog</a></div>
+					</div>
+		
+				</div>
+		
+			</div><!-- #copyrights end -->
+		
+		</footer><!-- #footer end -->
+
+	<!-- Go To Top
+	============================================= -->
+	<div id="gotoTop" class="icon-angle-up"></div>
+
+</body>
+</html>
