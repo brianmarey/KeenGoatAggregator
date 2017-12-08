@@ -24,7 +24,8 @@ public class PostController {
 	PostRepository postRepository;
 	
     @RequestMapping(value = "/{contextName}/post/{slug}", method=RequestMethod.GET)
-    public String post(@PathVariable String contextName, @PathVariable String slug, Model model) {
+    public String post(@PathVariable String contextName, @PathVariable String slug, Model model,
+    	HttpServletRequest request) {
     	Context context = contextRepository.fetchByName(contextName);
     	
     	if (context == null) {
@@ -37,7 +38,11 @@ public class PostController {
         	if (post == null) {
         		return "404";
         	} else {
+        		String url = request.getRequestURI();
+        		String ampUrl = url + "/amp";
+        		
         		model.addAttribute("post", post);
+        		model.addAttribute("ampUrl", ampUrl);
         		
                 return "post";	
         	}        	
