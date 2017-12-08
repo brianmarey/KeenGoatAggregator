@@ -39,7 +39,7 @@ public class PostController {
         		return "404";
         	} else {
         		String url = request.getRequestURI();
-        		String ampUrl = url + "/amp";
+        		String ampUrl = getAmpUrl(url, context);
         		
         		model.addAttribute("post", post);
         		model.addAttribute("ampUrl", ampUrl);
@@ -47,6 +47,15 @@ public class PostController {
                 return "post";	
         	}        	
     	}      
+    }
+        
+    
+    private String getAmpUrl(String url, Context context) {
+    	int secondSlash = url.indexOf("/", 2);
+    	String ampUrl = url.substring(secondSlash, url.length());
+    	ampUrl = context.getHomeUrl() + ampUrl + "/amp";
+    	
+    	return ampUrl;
     }
     
     
@@ -66,13 +75,8 @@ public class PostController {
         		return "404";
         	} else {
             	String url = request.getRequestURI();
-            	String noAmpUrl = url;
-            	
-            	int suffix = url.lastIndexOf("/amp");
-            	
-            	if (suffix > -1) {
-            		noAmpUrl = url.substring(0, suffix);
-            	}
+            	String noAmpUrl = getNoAmpUrl(url, context);
+            	            	
             	
             	model.addAttribute("noAmpUrl",noAmpUrl);
         		model.addAttribute("post", post);
@@ -80,5 +84,22 @@ public class PostController {
                 return "postAmp";	
         	}        	
     	}      
+    }
+    
+    
+    private String getNoAmpUrl(String url, Context context) {
+    	int secondSlash = url.indexOf("/", 2);
+    	String noAmpUrl = url.substring(secondSlash, url.length());
+    	
+    	System.err.println("No amp url is " + noAmpUrl);
+    	
+    	int suffix = noAmpUrl.lastIndexOf("/amp");
+    	if (suffix > -1) {
+    		noAmpUrl = noAmpUrl.substring(0, suffix);
+    	}
+
+    	noAmpUrl = context.getHomeUrl() + noAmpUrl;
+    	
+    	return noAmpUrl;
     }
 }
