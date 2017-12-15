@@ -1,5 +1,10 @@
 package com.careydevelopment.masculex.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,11 +109,32 @@ public class PostController {
     }
     
     
-    @RequestMapping(value = "/{contextName}/content/{slug}", method=RequestMethod.GET)
-    public String content(@PathVariable String contextName, @PathVariable String slug, Model model,
-    	HttpServletRequest request) {
+    @RequestMapping(value = "/{contextName}/content/{category}/{slug}", method=RequestMethod.GET)
+    public String content(@PathVariable String contextName, @PathVariable String slug, 
+    	@PathVariable String category, Model model, HttpServletRequest request) {
 
+    	String content = getContent(contextName, category,slug);
+    	model.addAttribute("content", content);
+    	
     	return "authBlog";
     }
 
+    
+    private String getContent(String contextName, String category, String slug) {
+    	String path = "/var/www/html/" + contextName + "/" + category + "/" + slug + ".html";
+    	
+    	System.err.println("path is "  + path);
+    	
+    	StringBuilder sb = new StringBuilder();
+    	
+		try (Stream<String> stream = Files.lines(Paths.get(path))) {
+	        stream.forEach(sb::append);
+		} catch (IOException ie) {
+			ie.printStackTrace();
+		}
+
+		System.err.println(sb);
+		
+		return sb.toString();
+    }
 }
