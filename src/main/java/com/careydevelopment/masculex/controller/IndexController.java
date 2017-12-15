@@ -19,6 +19,10 @@ public class IndexController {
     @RequestMapping(value = "/{contextName}", method=RequestMethod.GET)
     public String index(@PathVariable String contextName, Model model) {
     	
+    	if (contextName.equals("saltwater")) {
+    		return contextName;
+    	}
+    	
     	Context context = contextRepository.fetchByName(contextName);
     	
     	if (context == null) {

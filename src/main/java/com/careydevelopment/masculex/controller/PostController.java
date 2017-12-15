@@ -102,4 +102,13 @@ public class PostController {
     	
     	return noAmpUrl;
     }
+    
+    
+    @RequestMapping(value = "/{contextName}/content/{slug}", method=RequestMethod.GET)
+    public String content(@PathVariable String contextName, @PathVariable String slug, Model model,
+    	HttpServletRequest request) {
+
+    	return "authBlog";
+    }
+
 }
