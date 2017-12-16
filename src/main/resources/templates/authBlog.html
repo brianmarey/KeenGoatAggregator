@@ -11,13 +11,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<title th:text="${meta.title + ' | ' + webContext.title}"></title>
-	
+
 	<style>
 		#content p {
 			font-size: 14pt;
 		}
-	</style>	
-
+	</style>
 </head>
 
 <body class="stretched">
@@ -28,6 +27,21 @@
 
 		<div th:include="fragments/authheader :: outerheader" th:remove="tag"></div>
 		
+		<!-- Page Title
+		============================================= -->
+		<section id="page-title">
+
+			<div class="container clearfix">
+				<h1 th:text="${meta.title}"></h1>
+				<ol class="breadcrumb">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Blog</a></li>
+					<li class="active">Blog Single</li>
+				</ol>
+			</div>
+
+		</section><!-- #page-title end -->
+
 		<!-- Content
 		============================================= -->
 		<section id="content">
@@ -45,12 +59,6 @@
 							<!-- Single Post
 							============================================= -->
 							<div class="entry clearfix">
-
-								<!-- Entry Title
-								============================================= -->
-								<div class="entry-title">
-									<h1 th:text="${meta.title}"></h1>
-								</div><!-- .entry-title end -->
 
 								<!-- Entry Meta
 								============================================= -->
