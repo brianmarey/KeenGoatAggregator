@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.careydevelopment.masculex.jpa.entity.Content;
 import com.careydevelopment.masculex.jpa.entity.Context;
 import com.careydevelopment.masculex.jpa.entity.Post;
+import com.careydevelopment.masculex.jpa.repository.ContentRepository;
 import com.careydevelopment.masculex.jpa.repository.ContextRepository;
 import com.careydevelopment.masculex.jpa.repository.PostRepository;
 
@@ -24,6 +26,9 @@ public class PostController {
 
 	@Autowired
 	ContextRepository contextRepository;
+	
+	@Autowired
+	ContentRepository contentRepository;
 	
 	@Autowired
 	PostRepository postRepository;
@@ -112,18 +117,35 @@ public class PostController {
     @RequestMapping(value = "/{contextName}/content/{category}/{slug}", method=RequestMethod.GET)
     public String content(@PathVariable String contextName, @PathVariable String slug, 
     	@PathVariable String category, Model model, HttpServletRequest request) {
-
-    	String content = getContent(contextName, category,slug);
-    	model.addAttribute("content", content);
     	
-    	return "authBlog";
+    	Content meta = contentRepository.fetchBySlug(slug);
+    	if (meta == null) {
+    		return "404";
+    	}
+    	
+    	Context context = contextRepository.fetchByName(contextName);
+    	
+    	if (context == null) {
+    		return "404";
+    	} else {
+        	model.addAttribute("webContext", context);        	
+
+        	String content = getContent(contextName, category, slug);
+        	
+        	if (content == null || content.length() < 5) {
+        		return "404";
+        	} else {
+            	model.addAttribute("content", content);            	
+            	model.addAttribute("meta", meta);
+            	            	        		
+                return "authBlog";	
+        	}        	
+    	}      
     }
 
     
     private String getContent(String contextName, String category, String slug) {
     	String path = "/var/www/html/" + contextName + "/" + category + "/" + slug + ".html";
-    	
-    	System.err.println("path is "  + path);
     	
     	StringBuilder sb = new StringBuilder();
     	
@@ -133,8 +155,6 @@ public class PostController {
 			ie.printStackTrace();
 		}
 
-		System.err.println(sb);
-		
 		return sb.toString();
     }
 }
