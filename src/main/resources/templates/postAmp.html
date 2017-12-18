@@ -184,7 +184,7 @@
 										<h2><span th:text="${iterStatus.count + '. '}"></span> <span th:text="${product.title}"></span> <span th:text="${product.priceRange}"></span></h2>
 									</div><!-- .entry-title end -->
 		
-									<div class="fixed-container">
+									<div class="fixed-container" th:if="${!#strings.isEmpty(product.imageUrl)}">
 										<a th:href="${product.link}" target="_blank"><amp-img class="contain" th:src="${product.imageUrl}" layout="fill"></amp-img></a>
 									</div>
 									<!-- Entry Content
@@ -193,7 +193,7 @@
 										<p th:utext="${product.description}"></p>
 										<div class="clickButton"><a th:href="${product.link}" class="button button-xlarge tright" target="_blank">Learn More</a></div>
 									</div>
-							</div>
+								</div>
 							</div>
 						</div>
 
